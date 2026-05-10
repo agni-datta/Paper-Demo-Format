@@ -1,0 +1,47 @@
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  macros.tex — paper-specific macros
+%
+%  tcscrypto.sty (bundled) already defines the following — do NOT redefine:
+%    Math operators : \Pr, \E, \poly, \polylog, \negl, \log, \lg
+%    Sampling       : \getsr, \longsample, \sample
+%    Number sets    : \NN, \ZZ, \QQ, \RR, \FF, \GG, \CC
+%    Blackboard bold: \bbA–\bbZ (single-letter \bbX shorthand)
+%    Calligraphic   : \calA–\calZ (\calX shorthand)
+%    Mathsf letters : \sfA–\sfZ (\sfX shorthand)
+%    Security param : \secparam, \secpar, \SecParam, \comparam
+%    Primitives     : \Gen, \Eval, \Vrfy, \Sign, \Prove, \Verify,
+%                     \Enc, \Dec, \Setup, \KeyGen, \Hash, \Sim, \Ext
+%    Crypto schemes : \PRF, \PRG, \OWF, \PKE, \SKE, \SIG, \NIZK,
+%                     \SNARG, \SNARK, \IOP, \MPC, \FHE, \IBE, ... (100+)
+%    Scheme methods : \PRFEval, \PKEEnc, \SIGSign, ... (scheme.Method form)
+%    Adversaries    : \Adv, \advA, \advB, \advC, \advD, \advZ, \Red
+%    Proof entities : \Prover, \Verifier, \MaliciousProver, ...
+%    Security games : \advantage, \newsequenceofgames, \nextgame, \gameref
+%    Oracles        : \HashOracle, \SignOracle, \CDHOracle, ...
+%    Security notions: \indcpa, \indcca, \eufcma, \sufcma, ...
+%    Problems       : \LWE, \SIS, \CDH, \DDH, \RSA, \SATProb, ... (60+)
+%    Worlds         : \Minicrypt, \Cryptomania, \Obfustopia, ...
+%    Protocol env   : protocolbox
+%    Pseudocode     : \pcif, \pcelse, \pcfor, \pcreturn, \pclet, ...
+%    Abbreviations  : \eg, \ie, \cf, \wrt, \etal, \vs, \nb
+%    Delimiters     : \abs, \floor, \ceil, \norm, \inner, \set, \tuple
+%    Distributions  : \Distribution, \Distr, \Ensemble, \cindist, \sindist
+%    Lattice        : \latbasis, \latvec, \laterror, \latpubmat, ...
+%    Pairing groups : \GGone, \GGtwo, \GGt, \GT, \pairing
+%    Kolmogorov     : \Kt, \KS, \KC, \pKt, \rKS, ...
+%    Proof complexity: \Axioms, \Clauses, \proves, \Tseitin, ...
+%    TFNP classes   : \CLS, \EOL, \EOML, \PWPP, ...
+%
+%  See tcscrypto.sty for the full reference.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Email (LLNCS cls already defines \email; only define in article mode)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifSubmission\else
+  \newcommand{\email}[1]{\texttt{#1}}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Add paper-specific commands below this line
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

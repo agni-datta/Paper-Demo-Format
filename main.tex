@@ -1,0 +1,534 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Paper Template — Dual Format (Article / LLNCS)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Supported modes:
+%%%   • Submission mode  → LLNCS conference version
+%%%   • Eprint mode      → full version / arXiv
+%%%   • Comments mode    → enables author annotations
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Build Toggles
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newif\ifSubmission
+\newif\ifEprint
+\newif\ifComments
+
+\Submissiontrue
+\Eprintfalse
+\Commentsfalse
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Document Class
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifSubmission
+  \documentclass[
+    letterpaper,
+    runningheads,
+    USenglish
+  ]{llncs}
+\else
+  \documentclass[
+    11pt,
+    letterpaper,
+    USenglish
+  ]{article}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Package Configuration — Submission Mode
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifSubmission
+
+  \PassOptionsToPackage{inline}{enumitem}
+
+  % Core mathematics and crypto infrastructure
+  \usepackage[crypto,captions,tikz,theorems]{llncscrypto}
+
+  % Complexity classes and notation
+  \usepackage[full]{complexity}
+
+  % Utility packages
+  \usepackage{comment}
+  \usepackage[bottom]{footmisc}
+
+  % Tables
+  \usepackage{
+    array,
+    colortbl,
+    makecell,
+    multirow,
+    tabularray,
+    tabularx
+  }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Package Configuration — Article / Eprint Mode
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\else
+
+  % Core mathematics setup
+  \ifEprint
+    \usepackage[latinmodern,draft]{csamsmath}
+  \else
+    \usepackage[latinmodern]{csamsmath}
+  \fi
+
+  % Typography
+  \usepackage{sansmath}
+  \usepackage{setspace}
+
+  % Complexity classes and crypto notation
+  \usepackage[full]{complexity}
+  \usepackage{tcscrypto}
+
+  % Metadata and references
+  \usepackage{orcidlink}
+  \usepackage{tocbibind}
+  \usepackage{appendix}
+
+  % Utility packages
+  \usepackage[bottom]{footmisc}
+
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Shared Packages and Configuration
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Draft spacing
+\ifEprint
+  \linespread{1.10}
+\fi
+
+%%% Typography helpers
+\usepackage[normalem]{ulem}
+\usepackage{pifont}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Graphics and Diagrams
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifSubmission\else
+  \usepackage{amssymb}
+  \usepackage{tikz}
+  \usepackage{tikz-cd}
+  \usepackage{tikz-3dplot}
+  \usepackage{pgfplots}
+
+  \pgfplotsset{compat=1.18}
+\fi
+
+\usetikzlibrary{
+  arrows.meta,
+  backgrounds,
+  calc,
+  chains,
+  decorations.markings,
+  decorations.pathreplacing,
+  fit,
+  graphs,
+  matrix,
+  positioning,
+  shapes.geometric,
+  shapes.misc
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Compatibility Helpers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+\let\cc\relax
+\@ifundefined{cc}{\newcommand{\cc}{}}{}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Author Comments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifComments
+  \renewcommand{\missing}[1]{%
+    \textcolor{WildStrawberry}{%
+      \ifSubmission
+        {\sffamily #1}
+      \else
+        {\sffamily\sansmath #1}
+      \fi
+    }%
+    \marginnote{%
+      \textcolor{WildStrawberry}{\LARGE$\star$}%
+    }%
+  }
+  % Example:
+  % \newcomment{Alice}{RoyalBlue}{alice}
+  % \newcomment{Bob}{Firebrick4}{bob}
+\else
+  \renewcommand{\missing}[1]{#1}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Project Macros
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{macros}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Title and Author Metadata — Submission Mode
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifSubmission
+	\title{Paper Title}
+
+	\author{
+		First Author\inst{1}
+		\and
+		Second Author\inst{2}
+	}
+
+	\institute{
+		Institution One, City, Country\\
+		\email{author1@example.com}
+		\and
+		Institution Two, City, Country\\
+		\email{author2@example.com}
+	}
+
+	\maketitle
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%% Title and Author Metadata — Article / Eprint Mode
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\else
+
+	\pagestyle{plain}
+	\setcounter{tocdepth}{2}
+
+	\ifEprint
+		\title{Paper Title (Full Version)}
+	\else
+		\title{Paper Title}
+	\fi
+
+	\ifEprint
+		\author[1]{First Author}
+		\author[2]{Second Author}
+
+		\affil[1]{
+			Institution One, City, Country
+			\par\email{author1@example.com}\medskip
+		}
+		\affil[2]{
+			Institution Two, City, Country
+			\par\email{author2@example.com}
+		}
+
+	\else
+
+		\author{}
+
+	\fi
+
+	\date{\vspace{-2.5em}}
+
+	\maketitle
+
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{abstract}
+	The abstract should communicate the core contribution of the paper in a
+	self-contained form. A strong abstract typically answers four questions:
+	\begin{itemize}
+		\item What problem does the paper study?
+		\item Why is the problem important or technically interesting?
+		\item What are the main results or techniques?
+		\item What limitations, assumptions, or implications matter most?
+	\end{itemize}
+	State the main theorem or contribution explicitly whenever possible.
+	Avoid excessive notation, citations, undefined terminology, and long
+	historical background. The abstract should remain readable to researchers
+	outside the immediate specialization.
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Introduction
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+\label{sec:introduction}
+
+The introduction should move from a broad context to the precise technical
+problem addressed in the paper.
+
+Explain:
+\begin{itemize}
+	\item the scientific or mathematical setting,
+	\item the motivating question,
+	\item the main technical obstacles,
+	\item the significance of resolving them.
+\end{itemize}
+
+A good introduction helps readers understand not only \emph{what} the
+paper proves, but also \emph{why} the result matters and how it fits
+into the existing literature.
+
+Clearly distinguish:
+\begin{itemize}
+	\item established prior results,
+	\item open problems or limitations,
+	\item the new ideas introduced in this work.
+\end{itemize}
+
+Avoid delaying the main contribution for too long. Readers should
+understand the central theorem and its relevance early in the section.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Contributions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Our Contributions}
+\label{sec:contributions}
+
+This subsection should summarize the paper's contributions in a concise
+and technically precise form.
+
+Each item should state:
+\begin{itemize}
+	\item the result,
+	\item the assumptions under which it holds,
+	\item the main novelty or improvement.
+\end{itemize}
+
+Organize contributions from most central to most technical. Avoid vague
+claims such as ``significant improvement'' unless quantified.
+
+\begin{itemize}
+	\item \textbf{Main theorem.}
+	      State the primary result and the setting in which it applies.
+	\item \textbf{Technical contribution.}
+	      Explain the key technique, reduction, construction, or conceptual
+	      innovation introduced by the paper.
+\end{itemize}
+
+When appropriate, briefly compare quantitative parameters with prior
+work.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Related Work
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Related Work}
+\label{sec:related}
+
+The related work section should help readers position the paper within
+the broader literature.
+
+Focus on:
+\begin{itemize}
+	\item papers most directly connected to the main results,
+	\item differences in assumptions, models, or guarantees,
+	\item conceptual distinctions between techniques.
+\end{itemize}
+
+Avoid turning the section into a chronological list of references. Prioritize
+clarity and relevance over exhaustive citation lists.
+
+When comparing with previous work, explain precisely:
+\begin{itemize}
+	\item what earlier papers achieved,
+	\item what remained unresolved,
+	\item what this work changes or improves.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Preliminaries
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Preliminaries}
+\label{sec:prelim}
+
+Introduce notation, conventions, and background material required for
+the technical sections.
+
+Definitions should:
+\begin{itemize}
+	\item use consistent notation,
+	\item avoid unnecessary generality,
+	\item isolate assumptions clearly.
+\end{itemize}
+
+Whenever possible, separate standard material from paper-specific
+definitions so readers can distinguish foundational concepts from new
+technical machinery.
+
+\begin{definition}[Example Definition]
+	\label{def:example}
+	A \emph{widget} is a tuple $(\Gen,\Eval,\Vrfy)$ of PPT algorithms
+	satisfying the following properties \ldots
+\end{definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Main Results
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Main Results}
+\label{sec:main}
+
+Present the primary technical statements early and clearly.
+
+The beginning of the section should help readers understand:
+\begin{itemize}
+	\item the exact theorem statements,
+	\item the proof strategy at a high level,
+	\item the relationship between intermediate lemmas and final results.
+\end{itemize}
+
+State assumptions explicitly and avoid hiding important conditions inside
+proofs.
+
+\begin{theorem}
+	\label{thm:main}
+	Under assumption $X$, scheme $Y$ satisfies property $Z$.
+\end{theorem}
+
+Before presenting a long proof, briefly explain:
+\begin{itemize}
+	\item the main reduction or construction,
+	\item the source of the key difficulty,
+	\item the central technical insight.
+\end{itemize}
+
+\begin{proof}
+	Construct a reduction $\mathcal{R}$ and analyze its correctness and
+	security properties \ldots
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Conclusion
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The conclusion should summarize the conceptual significance of the work
+rather than merely restating theorem statements.
+
+Good conclusions often discuss:
+\begin{itemize}
+	\item remaining open problems,
+	\item limitations of the current techniques,
+	\item possible future directions,
+	\item broader implications of the results.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Acknowledgments (Eprint / Full Version Only)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifEprint
+	\vfill
+	\clearpage
+
+	\parhead{Acknowledgments.}
+
+	Acknowledge collaborators, discussions, institutional support,
+	anonymous reviewers, and funding sources where appropriate.
+
+	Keep acknowledgments concise and professional. Avoid excessively
+	informal remarks or long historical narratives.
+
+	\vfill
+	\clearpage
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Recommended bibliography workflow:
+%%%
+%%% 1. Download CryptoBib:
+%%%      https://cryptobib.di.ens.fr/
+%%%
+%%%    Recommended files:
+%%%      • bib/abbrev0.bib
+%%%      • bib/crypto.bib
+%%%
+%%% 2. Download CSTheoryBib:
+%%%      https://cstheory.bib.website/
+%%%
+%%%    Recommended file:
+%%%      • bib/cstheory.bib
+%%%
+%%% 3. Store project-specific references in:
+%%%      • bib/bibliography.bib
+%%%
+%%% 4. Adjust the \bibliography command below as needed.
+
+\ifSubmission
+	\bibliographystyle{splncs04}
+
+\else
+
+	\begin{small}
+		\vfill
+		\clearpage
+		\bibliographystyle{alphaurl}
+		\fi
+		\bibliography{bib/bibliography}
+		%%% Full bibliography setup:
+		%%% \bibliography{
+		%%%     bib/abbrev0,
+		%%%     bib/crypto,
+		%%%     bib/cstheory,
+		%%%     bib/bibliography
+		%%% }
+		\ifSubmission\else
+		\vfill
+		\clearpage
+	\end{small}
+
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\appendix
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Deferred Proofs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Deferred Proofs}
+\label{appx:proofs}
+
+Place proofs omitted from the main body here.
+
+Appendices should contain:
+\begin{itemize}
+	\item deferred technical arguments,
+	\item auxiliary lemmas,
+	\item extended constructions,
+	\item additional experimental or computational details when relevant.
+\end{itemize}
+
+Whenever possible, maintain the same notation and theorem numbering
+conventions used in the main text.
+
+\end{document}
